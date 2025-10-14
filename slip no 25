@@ -1,0 +1,54 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+struct Node* head = NULL;
+int choice, data, element;
+do 
+{
+printf("\n--- Singly Linked List Operations ---\n");
+printf("1. Create linked list and display it\n");
+printf("2. Accept an element and concatenate it\n");
+printf("3. Exit\n");
+printf("Enter your choice: ");
+scanf("%d", &choice);
+switch (choice) {
+case 1:
+printf("Enter number of elements to create: ");
+int n;
+scanf("%d", &n);
+for (int i = 0; i < n; i++)
+{
+printf("Enter element %d: ", i + 1);
+scanf("%d", &data);
+insertAtEnd(&head, data);
+}
+printf("Linked list created: ");
+displayList(head);
+break;
+case 2:
+printf("Enter an element to concatenate: ");
+scanf("%d", &element);
+concatenateElement(&head, element);
+printf("Updated list: ");
+displayList(head);
+break;
+case 3:
+printf("Exiting program.\n");
+break;
+default:
+printf("Invalid choice. Please try again.\n");
+}
+}
+while (choice != 3);
+struct Node* current = head;
+struct Node* next;
+while (current != NULL)
+{
+next = current->next;
+free(current);
+current = next;
+}
+
+    return 0;
+}
