@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node {
+int data;
+struct node *next;
+};
+struct node *head = NULL;
+void createList(int n) {
+struct node *newNode, *temp;
+int data, i;
+head = NULL;
+for(i = 0; i < n; i++) {
+newNode = (struct node*)malloc(sizeof(struct node));
+printf("Enter data for node %d: ", i+1);
+scanf("%d", &data);
+newNode->data = data;
+newNode->next = NULL;
+if(head == NULL)
+head = newNode;
+else {
+temp = head;
+while(temp->next != NULL)
+temp = temp->next;
+temp->next = newNode;
+}
+}
+}
+
+void displayList() {
+    struct node *temp = head;
+    if(head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+    printf("Linked list elements: ");
+    while(temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+void searchElement(int key) {
+    struct node *temp = head;
+    int pos = 1, found = 0;
+    while(temp != NULL) {
+        if(temp->data == key) {
+            printf("Element %d found at position %d.\n", key, pos);
+            found = 1;
+            break;
+        }
+        temp = temp->next;
+        pos++;
+    }
+    if(!found)
+        printf("Element %d not found in the list.\n", key);
+}
+
+int main() {
+    int choice, n, key;
+
+    while(1) {
+        printf("\n--- MENU ---\n");
+        printf("1. Create and Display List\n");
+        printf("2. Search Element\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1:
+                printf("Enter number of nodes: ");
+                scanf("%d", &n);
+                createList(n);
+                displayList();
+                break;
+            case 2:
+                printf("Enter element to search: ");
+                scanf("%d", &key);
+                searchElement(key);
+                break;
+            case 3:
+                exit(0);
+            default:
+                printf("Invalid choice! Try again.\n");
+        }
+    }
+    return 0;
+}
