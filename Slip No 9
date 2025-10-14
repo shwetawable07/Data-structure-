@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+int data;
+struct Node* next;
+}*head=NULL;
+void create(int n) {
+struct Node *newNode, *temp;
+for(int i=0;i<n;i++){
+newNode = (struct Node*)malloc(sizeof(struct Node));
+printf("Enter data: "); scanf("%d",&newNode->data);
+newNode->next = NULL;
+if(head==NULL) head=newNode;
+else { temp=head; while(temp->next) temp=temp->next; temp->next=newNode; }
+}
+}
+void display() {
+struct Node* temp=head;
+if(!temp){ printf("List is empty\n"); return; }
+printf("List: ");
+while(temp){ printf("%d ", temp->data); temp=temp->next; }
+printf("\n");
+}
+void deleteElement(int key) {
+struct Node *temp=head, *prev=NULL;
+while(temp && temp->data != key){ prev=temp; temp=temp->next; }
+if(!temp){ printf("Element not found\n"); return; }
+if(!prev) head=head->next; else prev->next=temp->next;
+free(temp);
+printf("Deleted %d\n", key);
+}
+int main() {
+int choice, n, key;
+do {
+printf("\nMenu:\n1.Create 2.Display 3.Delete 4.Exit\nChoice: ");
+scanf("%d",&choice);
+switch(choice){
+case 1: printf("Number of nodes: "); scanf("%d",&n); create(n); break;
+case 2: display(); break;
+case 3: printf("Element to delete: "); scanf("%d",&key); deleteElement(key); break;
+case 4: printf("Exiting\n"); break;
+default: printf("Invalid choice\n");
+}
+} while(choice != 4);
+}
