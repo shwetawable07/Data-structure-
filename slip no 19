@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX_EMPLOYEES 100
+#define MAX_NAME_LENGTH 50
+typedef struct {
+char name[MAX_NAME_LENGTH];
+int age;
+} Employee;
+int read_employees(Employee employees[], const char *filename) {
+FILE *file = fopen(filename, "r");
+if (file == NULL) {
+printf("Error: Could not open file %s\n", filename);
+return 0;
+}
+int count = 0;
+while (count < MAX_EMPLOYEES && fscanf(file, "%s %d", employees[count].name, &employees[count].age) == 2) {
+count++;
+}
+fclose(file);
+return count;
+}
