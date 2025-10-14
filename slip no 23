@@ -1,0 +1,28 @@
+#include <iostream>
+
+class Node {
+public:
+    int data;
+    Node* prev;
+    Node* next;
+
+    Node(int value) {
+        data = value;
+        prev = nullptr;
+        next = nullptr;
+    }
+};
+
+class DoublyLinkedList {
+private:
+    Node* head;
+
+public:
+    DoublyLinkedList() {
+        head = nullptr;
+    }
+    
+    void createAndDisplay(int n);
+    void display();
+    void reverseAndDisplay();
+};
