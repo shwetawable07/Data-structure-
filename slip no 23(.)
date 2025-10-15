@@ -1,0 +1,97 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+int data;
+struct Node *prev;
+struct Node *next;
+};
+struct Node* createNode(int data) {
+struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+newNode->data = data;
+newNode->prev = NULL;
+newNode->next = NULL;
+return newNode;
+}
+struct Node* createList(struct Node* head) {
+int n, data;
+printf("Enter the number of nodes: ");
+scanf("%d", &n);
+if (n <= 0) {
+printf("List cannot be empty!\n");
+return NULL;
+}
+struct Node *temp, *newNode;
+for (int i = 0; i < n; i++) {
+printf("Enter data for node %d: ", i + 1);
+scanf("%d", &data);
+newNode = createNode(data);
+if (head == NULL) {
+head = newNode;
+temp = head;
+} else {
+temp->next = newNode;
+newNode->prev = temp;
+temp = newNode;
+}
+}
+printf("Linked list created successfully.\n");
+return head;
+}
+void displayList(struct Node* head) {
+if (head == NULL) {
+printf("List is empty.\n");
+return;
+}
+struct Node* temp = head;
+printf("Linked list: ");
+while (temp != NULL) {
+printf("%d ", temp->data);
+temp = temp->next;
+}
+printf("\n");
+}
+struct Node* reverseList(struct Node* head) {
+if (head == NULL) {
+printf("List is empty, cannot reverse.\n");
+return NULL;
+}
+struct Node *temp = NULL, *current = head;
+while (current != NULL) {
+temp = current->prev;
+current->prev = current->next;
+current->next = temp;
+current = current->prev;
+}
+if (temp != NULL)
+head = temp->prev;
+printf("Linked list reversed successfully.\n");
+return head;
+}
+int main() {
+struct Node* head = NULL;
+int choice;
+do {
+printf("\n--- Doubly Linked List Menu ---\n");
+printf("1. Create and Display Linked List\n");
+printf("2. Reverse Linked List and Display\n");
+printf("3. Exit\n");
+printf("Enter your choice: ");
+scanf("%d", &choice);
+switch (choice) {
+case 1:
+head = createList(head);
+displayList(head);
+break;
+case 2:
+head = reverseList(head);
+displayList(head);
+break;
+case 3:
+printf("Exiting program.\n");
+break;
+default:
+printf("Invalid choice! Please try again.\n");
+}
+} while (choice != 3);
+return 0;
+}
